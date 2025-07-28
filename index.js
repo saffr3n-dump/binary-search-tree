@@ -4,8 +4,8 @@ class Tree {
   }
 
   #buildTree(values) {
-    this.#removeDupes(values).sort((a, b) => a - b);
-    return this.#buildTreeRec(values, 0, values.length, null);
+    const norm = this.#removeDupes(values).sort((a, b) => a - b);
+    return this.#buildTreeRec(norm, 0, norm.length);
   }
 
   #buildTreeRec(values, min, max, parent = null) {
@@ -19,16 +19,10 @@ class Tree {
 
   #removeDupes(values) {
     const set = new Set();
-    for (let i = 0; i < values.length; ++i) {
-      if (set.has(values[i])) {
-        const last = values.length - 1;
-        [values[i], values[last]] = [values[last], values[i]];
-        values.pop();
-      } else {
-        set.add(values[i]);
-      }
+    for (const value of values) {
+      set.add(value);
     }
-    return values;
+    return Array.from(set);
   }
 }
 
