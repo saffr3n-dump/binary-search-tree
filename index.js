@@ -20,6 +20,34 @@ class Tree {
     }
   }
 
+  delete(value) {
+    let path;
+    let prev = null;
+    let curr = this.root;
+    if (!curr) return;
+    while (true) {
+      if (value === curr.value) break;
+      path = value < curr.value ? 'left' : 'right';
+      if (!curr[path]) return;
+      prev = curr;
+      curr = curr[path];
+    }
+    if (!curr.left || !curr.right) {
+      const next = curr.left ? curr.left : curr.right;
+      if (!prev) this.root = next;
+      else prev[path] = next;
+    } else {
+      let prevSucc = curr;
+      let currSucc = curr.right;
+      while (currSucc.left) {
+        prevSucc = currSucc;
+        currSucc = currSucc.left;
+      }
+      curr.value = currSucc.value;
+      prevSucc[prevSucc === curr ? 'right' : 'left'] = currSucc.right;
+    }
+  }
+
   #buildTree(values) {
     const norm = this.#removeDupes(values).sort((a, b) => a - b);
     return this.#buildTreeRec(norm, 0, norm.length);
