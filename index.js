@@ -70,6 +70,19 @@ class Tree {
     }
   }
 
+  inOrderForEach(callback) {
+    if (typeof callback !== 'function') {
+      throw new TypeError('Must provide a callback function');
+    }
+    function rec(node) {
+      if (!node) return;
+      rec(node.left);
+      callback(node);
+      rec(node.right);
+    }
+    rec(this.root);
+  }
+
   #buildTree(values) {
     const norm = this.#removeDupes(values).sort((a, b) => a - b);
     return this.#buildTreeRec(norm, 0, norm.length);
