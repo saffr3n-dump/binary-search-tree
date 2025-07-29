@@ -57,6 +57,19 @@ class Tree {
     return curr;
   }
 
+  levelOrderForEach(callback) {
+    if (typeof callback !== 'function') {
+      throw new TypeError('Must provide a callback function');
+    }
+    const queue = [this.root];
+    while (queue.length) {
+      const curr = queue.shift();
+      if (curr.left) queue.push(curr.left);
+      if (curr.right) queue.push(curr.right);
+      callback(curr);
+    }
+  }
+
   #buildTree(values) {
     const norm = this.#removeDupes(values).sort((a, b) => a - b);
     return this.#buildTreeRec(norm, 0, norm.length);
