@@ -155,6 +155,12 @@ class Tree {
     return rec(this.root) !== -1;
   }
 
+  rebalance() {
+    const values = [];
+    this.inOrderForEach((node) => values.push(node.value));
+    this.root = this.#buildTreeRec(values, 0, values.length);
+  }
+
   #buildTree(values) {
     const norm = this.#removeDupes(values).sort((a, b) => a - b);
     return this.#buildTreeRec(norm, 0, norm.length);
