@@ -109,6 +109,27 @@ class Tree {
     rec(this.root);
   }
 
+  height(value) {
+    const node = this.find(value);
+    if (!node) return null;
+    let height = 0;
+    let currQueue = [node];
+    let nextQueue = [];
+    while (true) {
+      if (!currQueue.length) {
+        if (!nextQueue.length) break;
+        ++height;
+        currQueue = nextQueue;
+        nextQueue = [];
+        continue;
+      }
+      const curr = currQueue.shift();
+      if (curr.left) nextQueue.push(curr.left);
+      if (curr.right) nextQueue.push(curr.right);
+    }
+    return height;
+  }
+
   #buildTree(values) {
     const norm = this.#removeDupes(values).sort((a, b) => a - b);
     return this.#buildTreeRec(norm, 0, norm.length);
