@@ -130,6 +130,18 @@ class Tree {
     return height;
   }
 
+  depth(value) {
+    let depth = 0;
+    let node = this.root;
+    while (node) {
+      if (value === node.value) break;
+      ++depth;
+      node = node[value < node.value ? 'left' : 'right'];
+    }
+    if (!node) return null;
+    return depth;
+  }
+
   #buildTree(values) {
     const norm = this.#removeDupes(values).sort((a, b) => a - b);
     return this.#buildTreeRec(norm, 0, norm.length);
