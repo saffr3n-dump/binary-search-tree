@@ -96,6 +96,19 @@ class Tree {
     rec(this.root);
   }
 
+  postOrderForEach(callback) {
+    if (typeof callback !== 'function') {
+      throw new TypeError('Must provide a callback function');
+    }
+    function rec(node) {
+      if (!node) return;
+      rec(node.left);
+      rec(node.right);
+      callback(node);
+    }
+    rec(this.root);
+  }
+
   #buildTree(values) {
     const norm = this.#removeDupes(values).sort((a, b) => a - b);
     return this.#buildTreeRec(norm, 0, norm.length);
