@@ -142,6 +142,19 @@ class Tree {
     return depth;
   }
 
+  isBalanced() {
+    function rec(node) {
+      if (!node) return 0;
+      const lh = rec(node.left);
+      if (lh === -1) return -1;
+      const rh = rec(node.right);
+      if (lh === -1) return -1;
+      if (Math.abs(lh - rh) > 1) return -1;
+      return Math.max(lh, rh) + 1;
+    }
+    return rec(this.root) !== -1;
+  }
+
   #buildTree(values) {
     const norm = this.#removeDupes(values).sort((a, b) => a - b);
     return this.#buildTreeRec(norm, 0, norm.length);
