@@ -13,7 +13,7 @@ class Tree {
       if (value === root.value) return;
       const path = value < root.value ? 'left' : 'right';
       if (!root[path]) {
-        root[path] = new Node(value, root);
+        root[path] = new Node(value);
         return;
       }
       root = root[path];
@@ -44,9 +44,8 @@ class Tree {
 }
 
 class Node {
-  constructor(value, parent = null) {
+  constructor(value) {
     this.value = value;
-    this.parent = parent;
     this.left = this.right = null;
   }
 }
