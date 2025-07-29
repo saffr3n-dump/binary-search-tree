@@ -48,6 +48,15 @@ class Tree {
     }
   }
 
+  find(value) {
+    let curr = this.root;
+    while (curr) {
+      if (value === curr.value) break;
+      curr = curr[value < curr.value ? 'left' : 'right'];
+    }
+    return curr;
+  }
+
   #buildTree(values) {
     const norm = this.#removeDupes(values).sort((a, b) => a - b);
     return this.#buildTreeRec(norm, 0, norm.length);
